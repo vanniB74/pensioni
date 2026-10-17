@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accesso operatori · C.S.I.</title>
+<meta name="theme-color" content="#f8f3eb">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/theme.css">
+</head>
+<body>
+
+<main class="auth-wrap">
+  <div class="auth">
+
+    <div id="auth-view">
+      <div class="auth-logo" aria-hidden="true">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/></svg>
+      </div>
+
+      <h1>Accesso operatori</h1>
+      <p class="auth-sub">Area riservata C.S.I. — solo personale autorizzato</p>
+
+      <div class="auth-card">
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label class="fl" for="email" style="font-size:15px">Email operatore</label>
+            <div class="input-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <input id="email" name="email" type="email" placeholder="operatore@csi.it" autocomplete="username" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="label-row">
+              <label for="password">Password</label>
+              <a href="#" id="forgot-link">Password dimenticata?</a>
+            </div>
+            <div class="input-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input id="password" name="password" type="password" placeholder="••••••••" autocomplete="current-password" required minlength="6">
+            </div>
+          </div>
+
+          <p class="help is-error is-hidden" id="login-error" role="alert" style="margin:-6px 0 14px"></p>
+
+          <button class="btn btn-primary btn-block" type="submit" style="--btn-h:52px;border-radius:8px">Invia codice di accesso</button>
+
+          <p class="help" style="margin-top:14px">Il codice OTP a 6 cifre viene inviato alla casella dell'operatore. Nessun accesso è consentito ai clienti.</p>
+        </form>
+
+        <form id="otp-form" class="is-hidden" novalidate>
+          <p class="otp-info" id="otp-info">Codice inviato.</p>
+
+          <div class="field">
+            <label class="fl" for="otp" style="font-size:15px">Codice OTP</label>
+            <input class="input otp-input" id="otp" name="otp" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000">
+          </div>
+
+          <p class="help is-hidden" id="otp-hint"></p>
+
+          <button class="btn btn-primary btn-block" type="submit" style="--btn-h:52px;border-radius:8px">Verifica e accedi</button>
+
+          <div class="otp-actions">
+            <button class="linkish" type="button" id="otp-resend">Reinvia codice</button>
+            <button class="linkish" type="button" id="otp-back">Cambia email</button>
+          </div>
+        </form>
+      </div>
+
+      <p class="auth-note">C.S.I. · Centro Servizi Integrati — accesso riservato agli operatori. Le credenziali non lasciano il browser.</p>
+    </div>
+
+    <div class="reserved" id="reserved-view" style="text-align:left">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px">
+        <h1 class="page-title">Area riservata</h1>
+        <button class="btn btn-outline btn-sm" type="button" id="logout-btn">Esci</button>
+      </div>
+      <p class="lead" id="reserved-hello" style="font-size:16.5px"></p>
+
+      <div class="crm-bar">
+        <h2 class="section-label" style="margin:0">Richieste di ricalcolo</h2>
+        <button class="btn btn-outline btn-sm" type="button" id="crm-refresh">Aggiorna</button>
+      </div>
+      <p class="help" id="crm-note"></p>
+
+      <div class="crm-wrap" id="crm-wrap">
+        <table class="crm-table">
+          <thead>
+            <tr>
+              <th>Ricevuta</th>
+              <th>Richiedente</th>
+              <th>Appuntamento</th>
+              <th>SPID</th>
+              <th>Stato</th>
+            </tr>
+          </thead>
+          <tbody id="crm-body"></tbody>
+        </table>
+      </div>
+
+      <div class="booking-list" id="booking-list"></div>
+
+      <div class="receipt-actions" style="margin-top:24px">
+        <a class="btn btn-primary" href="prenota.html">Nuova prenotazione</a>
+        <a class="btn btn-outline" href="index.html">Torna alla home</a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>
