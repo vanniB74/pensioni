@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prenota · Ricalcolo pensione</title>
+<meta name="description" content="Prenota il tuo appuntamento per il ricalcolo della pensione: anagrafica, mandato e privacy, calendario.">
+<meta name="theme-color" content="#f8f3eb">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c2340'/%3E%3Ctext x='32' y='42' font-family='Inter,Arial' font-size='24' font-weight='700' fill='%23fff' text-anchor='middle'%3ECSI%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<main class="wizard container">
+
+  <a class="back-link" href="index.html">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+    C.S.I. Centro Servizi Integrati
+  </a>
+
+  <h1 class="page-title" id="wizard-title" tabindex="-1">Prenota il tuo appuntamento</h1>
+
+  <div class="stepper" id="stepper" aria-hidden="true">
+    <div class="s-item is-active" data-step-label="1">1 · Anagrafica</div>
+    <div class="s-item" data-step-label="2">2 · Mandato e privacy</div>
+    <div class="s-item" data-step-label="3">3 · Calendario</div>
+  </div>
+
+  <form id="wizard" novalidate autocomplete="on">
+
+    <!-- ================= STEP 1 ================= -->
+    <section class="step-panel" data-step="1" aria-labelledby="step1-head">
+      <h2 class="visually-hidden" id="step1-head">Anagrafica</h2>
+
+      <div class="field">
+        <label class="fl" for="nome">Nome e cognome</label>
+        <input class="input" id="nome" name="nome" type="text" autocomplete="name" required>
+      </div>
+
+      <div class="field">
+        <label class="fl" for="cf">Codice fiscale</label>
+        <input class="input" id="cf" name="cf" type="text" inputmode="text" maxlength="16" autocapitalize="characters" spellcheck="false" aria-describedby="cf-help" required>
+        <p class="help" id="cf-help">Il codice fiscale deve avere 16 caratteri.</p>
+      </div>
+
+      <div class="field">
+        <label class="fl" for="doc">Numero documento d'identità</label>
+        <input class="input" id="doc" name="doc" type="text" maxlength="20" autocapitalize="characters" spellcheck="false" required>
+      </div>
+
+      <div class="field">
+        <label class="fl" for="docDate">Data di validità del documento</label>
+        <input class="input" id="docDate" name="docDate" type="date" required>
+      </div>
+
+      <div class="field">
+        <label class="fl" for="email">Email</label>
+        <input class="input" id="email" name="email" type="email" autocomplete="email" required>
+      </div>
+
+      <div class="field">
+        <label class="fl" for="tel">Telefono</label>
+        <input class="input" id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" required>
+      </div>
+
+      <div class="field">
+        <div class="file-card">
+          <label class="file-label" for="fileCf">Immagine codice fiscale <span>(facoltativo)</span></label>
+          <input id="fileCf" name="fileCf" type="file" accept="image/*,application/pdf">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="file-card">
+          <label class="file-label" for="fileDoc">Immagine carta d'identità <span>(facoltativo)</span></label>
+          <input id="fileDoc" name="fileDoc" type="file" accept="image/*,application/pdf">
+        </div>
+      </div>
+
+      <p class="help">I file sono archiviati in modo privato.</p>
+
+      <div class="wizard-actions">
+        <button class="btn btn-primary" type="button" id="next-1" disabled>Continua</button>
+      </div>
+    </section>
+
+    <!-- ================= STEP 2 ================= -->
+    <section class="step-panel is-hidden" data-step="2" aria-labelledby="step2-head">
+      <h2 class="visually-hidden" id="step2-head">Mandato e privacy</h2>
+
+      <!-- ============ MANDATO ============ -->
+      <section class="doc-card" aria-labelledby="mandato-title">
+        <div class="doc-head">
+          <p class="doc-kicker">Modulo 1</p>
+          <h3 id="mandato-title">Mandato di assistenza e rappresentanza</h3>
+          <p class="doc-sub">Ricalcolo della pensione · C.S.I. Centro Servizi Integrati</p>
+        </div>
+
+        <div class="doc-parties">
+          <div class="party">
+            <p class="party-label">Delegante</p>
+            <dl class="party-grid">
+              <div><dt>Nome e cognome</dt><dd data-fill="nome">—</dd></div>
+              <div><dt>Codice fiscale</dt><dd data-fill="cf">—</dd></div>
+              <div><dt>Documento</dt><dd data-fill="doc">—</dd></div>
+              <div><dt>Email</dt><dd data-fill="email">—</dd></div>
+              <div><dt>Telefono</dt><dd data-fill="tel">—</dd></div>
+            </dl>
+            <button class="doc-edit" type="button" id="edit-anagrafica">Modifica i dati</button>
+          </div>
+
+          <div class="party">
+            <p class="party-label">Delegato</p>
+            <p class="party-name">C.S.I. — Centro Servizi Integrati</p>
+            <p class="party-note">Assistenza e rappresentanza del delegante nelle pratiche previdenziali.</p>
+          </div>
+        </div>
+
+        <div class="doc-body">
+          <p>Con il presente mandato il/la sottoscritto/a conferisce a C.S.I. — Centro Servizi Integrati l'incarico di assistere e rappresentare il delegante nella verifica della posizione pensionistica e, ove ne ricorrano i presupposti, nella presentazione del ricorso per il ricalcolo e il riconoscimento degli importi retroattivi.</p>
+          <ul>
+            <li>Accesso e verifica dei dati contributivi e previdenziali presso gli enti competenti.</li>
+            <li>Predisposizione e presentazione di istanze, ricorsi e comunicazioni.</li>
+            <li>Gestione del rapporto con gli enti fino alla conclusione della pratica.</li>
+          </ul>
+          <p>Il mandato è gratuito per il delegante e può essere revocato in qualsiasi momento con comunicazione scritta. Resta valido fino alla definizione della pratica.</p>
+        </div>
+
+        <div class="sign-block">
+          <div class="sign-place"><span>Luogo e data</span><strong id="sign-date">—</strong></div>
+          <label class="sign-field" for="firmaNome">
+            <span>Firma del delegante</span>
+            <input class="input" id="firmaNome" name="firmaNome" type="text" autocomplete="name" placeholder="Nome e cognome">
+          </label>
+        </div>
+
+        <label class="check-row doc-consent" for="checkMandato">
+          <input type="checkbox" id="checkMandato" name="checkMandato">
+          <span>Dichiaro di aver letto e di sottoscrivere il mandato qui sopra.</span>
+        </label>
+      </section>
+
+      <!-- ============ PRIVACY ============ -->
+      <section class="doc-card" aria-labelledby="privacy-title">
+        <div class="doc-head">
+          <p class="doc-kicker">Modulo 2</p>
+          <h3 id="privacy-title">Informativa e consenso privacy</h3>
+          <p class="doc-sub">Regolamento UE 2016/679 · artt. 13 e 6</p>
+        </div>
+
+        <div class="doc-body">
+          <p><strong>Titolare del trattamento:</strong> C.S.I. — Centro Servizi Integrati.</p>
+          <p><strong>Finalità:</strong> gestione del mandato, verifica della posizione previdenziale, presentazione di istanze e ricorsi, adempimenti connessi.</p>
+          <p><strong>Destinatari:</strong> INPS e altri enti previdenziali, enti di certificazione SPID, consulenti incaricati.</p>
+          <p><strong>Conservazione:</strong> per il tempo necessario alla pratica e agli obblighi di legge.</p>
+          <p><strong>Diritti:</strong> accesso, rettifica, cancellazione, limitazione, opposizione e reclamo al Garante (artt. 15-22 GDPR).</p>
+        </div>
+
+        <div class="consents">
+          <label class="check-row" for="checkPrivacy">
+            <input type="checkbox" id="checkPrivacy" name="checkPrivacy">
+            <span>Acconsento al trattamento dei dati personali per le finalità del mandato. <em>(necessario)</em></span>
+          </label>
+          <label class="check-row" for="checkComunicazione">
+            <input type="checkbox" id="checkComunicazione" name="checkComunicazione">
+            <span>Acconsento alla comunicazione dei dati agli enti previdenziali e ai soggetti indicati. <em>(necessario)</em></span>
+          </label>
+          <label class="check-row" for="checkMarketing">
+            <input type="checkbox" id="checkMarketing" name="checkMarketing">
+            <span>Desidero ricevere aggiornamenti sulle pratiche e comunicazioni informative. <em>(facoltativo)</em></span>
+          </label>
+        </div>
+
+        <div class="sign-block">
+          <div class="sign-place"><span>Luogo e data</span><strong class="sign-date-mirror">—</strong></div>
+          <div class="sign-field"><span>Firma</span><strong class="sign-echo" id="firma-echo">—</strong></div>
+        </div>
+      </section>
+
+      <h2 class="section-label" id="spid-question">Hai lo SPID? (scelta obbligatoria)</h2>
+      <div role="radiogroup" aria-labelledby="spid-question">
+        <button class="opt" type="button" role="radio" aria-checked="false" data-spid="yes">Ho già lo SPID</button>
+        <button class="opt" type="button" role="radio" aria-checked="false" data-spid="assist">Non ce l'ho: voglio l'assistenza della struttura</button>
+      </div>
+
+      <div class="spid-panel is-hidden" id="spid-panel">
+        <p>Possiamo crearlo insieme a te. Servono un documento d'identità valido, la tessera sanitaria, un'email e un cellulare personali. Il costo indicativo è di 35 € da versare in anticipo; l'importo sarà trattenuto dall'agenzia alla conclusione della pratica.</p>
+
+        <img class="spid-banner" src="../.zwork/attachments/b345ede8-ed6a-4d50-977b-27a0c0a397dc/CSI%20-%20SPID.jpg" data-alt-src="assets/img/spid-cie.jpg" alt="SPID e Cie ID — identità digitale">
+        <div class="spid-banner-fallback is-hidden" id="spid-banner-fallback" aria-hidden="true">
+          <span class="sb-big">spid</span>
+          <span class="sb-cie">Cie ID</span>
+        </div>
+
+        <div class="spid-badges">
+          <div class="logo-tile">
+            <img class="brand-mark namirial" src="../.zwork/attachments/49b07737-ae3c-4d25-ad13-584833a70dbb/namirial.jpg" data-alt-src="assets/img/namirial.jpg" alt="Namirial ID — SPID">
+            <span class="logo-fallback fb-namirial" aria-hidden="true"><span class="fb-word">Namirial<i>ID</i></span><span class="chip-spid">SPID</span></span>
+          </div>
+          <div class="logo-tile">
+            <img class="brand-mark spiditalia" src="../.zwork/attachments/b42ecdc6-6f62-453d-9bf3-c490167490be/spiditalia.png" data-alt-src="assets/img/spiditalia.png" alt="SpidItalia Register.it">
+            <span class="logo-fallback fb-spiditalia" aria-hidden="true"><span class="fb-word"><i>Spid</i><b>Italia</b></span><span class="fb-sub">REGISTER.IT</span></span>
+          </div>
+          <div class="logo-tile">
+            <img class="brand-mark infocert" src="../.zwork/attachments/18a91c5e-5883-4856-8e52-02fe92c94c8c/InfoCert-ID.png" data-alt-src="assets/img/infocert.png" alt="InfoCert ID">
+            <span class="logo-fallback fb-infocert" aria-hidden="true"><span class="fb-word">Info<b>Cert</b></span><span class="idbox">ID</span></span>
+          </div>
+        </div>
+
+        <p class="spid-note">Il costo può variare a seconda dell'ente scelto e delle convenzioni vigenti.</p>
+      </div>
+
+      <div class="wizard-actions">
+        <button class="btn btn-outline" type="button" id="back-2">Indietro</button>
+        <button class="btn btn-primary" type="button" id="next-2">Continua</button>
+      </div>
+    </section>
+
+    <!-- ================= STEP 3 ================= -->
+    <section class="step-panel is-hidden" data-step="3" aria-labelledby="step3-head">
+      <h2 class="visually-hidden" id="step3-head">Calendario</h2>
+
+      <div class="cal" id="cal">
+        <div class="cal-head">
+          <button class="cal-nav" type="button" id="cal-prev" aria-label="Mese precedente">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <div class="cal-title" id="cal-title" aria-live="polite">ottobre 2026</div>
+          <button class="cal-nav" type="button" id="cal-next" aria-label="Mese successivo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div class="cal-grid" id="cal-grid" role="grid" aria-labelledby="cal-title"></div>
+      </div>
+
+      <h2 class="section-label" style="margin-top:26px">Orari disponibili</h2>
+      <div class="slots" id="slots" role="radiogroup" aria-label="Orari disponibili"></div>
+
+      <div class="summary" id="summary" aria-live="polite"></div>
+
+      <div class="wizard-actions">
+        <button class="btn btn-outline" type="button" id="back-3">Indietro</button>
+        <button class="btn btn-primary" type="button" id="submit-booking">Conferma e invia</button>
+      </div>
+    </section>
+
+  </form>
+
+  <!-- ================= CONFERMA ================= -->
+  <section class="receipt is-hidden" id="receipt" aria-labelledby="receipt-title">
+    <div class="receipt-badge">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+    </div>
+    <h1 class="page-title" id="receipt-title" tabindex="-1">Prenotazione inviata</h1>
+    <p class="lead" style="margin-top:14px">Ti abbiamo inviato l'invito calendario via email. Ti contatteremo per confermare l'appuntamento e ricordarti i documenti da portare.</p>
+
+    <div class="receipt-grid">
+      <dl id="receipt-details"></dl>
+    </div>
+
+    <div class="receipt-actions">
+      <button class="btn btn-primary" type="button" id="download-ics">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        Aggiungi al calendario
+      </button>
+      <a class="btn btn-outline" href="index.html">Torna alla home</a>
+    </div>
+  </section>
+
+</main>
+
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>
