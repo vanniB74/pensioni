@@ -1,4 +1,4 @@
-# C.S.I. · Ricalcolo pensione — clone statico
+# C.S.I. · Ricalcolo pensione
 
 Clone funzionante dell'app **Base44** `finicky-smart-pension-flow` (C.S.I. — Centro Servizi Integrati): landing di acquisizione + procedura di prenotazione in tre passaggi + area riservata.
 
