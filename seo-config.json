@@ -6,11 +6,22 @@
   "heroText": "Stai cercando ricalcolo pensione inps a Bari? Burdi Consulenza ti accompagna dall'analisi della posizione alla pratica completa, con un metodo semplice e trasparente. Il servizio di ricalcolo pensione inps serve a controllare che ogni dato sia corretto prima che diventi un problema: un controllo alla fonte evita perdite di tempo e di denaro. Operiamo a Bari, Valenzano, Adelfia, Ceglie del Campo, Loseto, Carbonara, Triggiano e in tutta la provincia di BA, con appuntamenti in ufficio e consulenze anche online. Nelle sezioni qui sotto trovi risposte alle domande più frequenti, con esempi concreti e tempi chiari. La prima valutazione è gratuita: raccontaci la tua situazione e ti diciamo con onestà se conviene procedere e in che tempi.",
   "veryLongTail": [
     "Ricalcolo pensione inps a Bari",
-    "Quanto costa ricalcolo pensione inps a Bari",
     "Ricalcolo pensione inps a Valenzano",
+    "Ricalcolo pensione inps a Adelfia",
+    "Ricalcolo pensione inps a Ceglie del Campo",
+    "Ricalcolo pensione inps a Loseto",
+    "Ricalcolo pensione inps a Carbonara",
+    "Ricalcolo pensione inps a Triggiano",
+    "Quanto costa ricalcolo pensione inps a Bari",
+    "Quanto costa ricalcolo pensione inps a Valenzano",
+    "Quanto costa ricalcolo pensione inps a Adelfia",
+    "Quanto costa ricalcolo pensione inps a Ceglie del Campo",
+    "Quanto costa ricalcolo pensione inps a Loseto",
+    "Quanto costa ricalcolo pensione inps a Carbonara",
+    "Quanto costa ricalcolo pensione inps a Triggiano",
     "Come funziona ricalcolo pensione inps",
     "Ricalcolo pensione inps documenti necessari",
-    "Ricalcolo pensione inps per anziani a Bari"
+    "Ricalcolo pensione inps per anziani"
   ],
   "altTexts": {
     "hero": "Ricalcolo pensione inps a Bari — consulenza ricalcolo pensione inps a Bari",
@@ -173,16 +184,16 @@
   "url": "https://csi-pensioni-rho.vercel.app/",
   "heroImages": [
     {
-      "url": "https://csi-pensioni-clone-ebon.vercel.app/assets/img/hero.jpg",
-      "alt": "Ricalcolo pensione inps a Bari — consulenza ricalcolo pensione inps a Bari"
+      "url": "https://csi-pensioni-rho.vercel.app/assets/img/hero.jpg",
+      "alt": "Ricalcolo pensione inps a Bari e in provincia (Valenzano, Adelfia, Ceglie del Campo, Loseto, Carbonara, Triggiano) — consulenza ricalcolo pensione inps"
     },
     {
       "url": "https://csi-pensioni-rho.vercel.app/assets/img/consulenza.jpg",
-      "alt": "Ricalcolo pensione inps a Bari — il team Burdi Consulenza al lavoro"
+      "alt": "Ricalcolo pensione inps a Bari e in provincia (Valenzano, Adelfia, Ceglie del Campo, Loseto, Carbonara, Triggiano) — il team CSI sportello al cittadino al lavoro"
     },
     {
-      "url": "",
-      "alt": "Ricalcolo pensione inps a Bari — documenti per la pratica di ricalcolo pensione inps"
+      "url": "https://csi-pensioni-rho.vercel.app/assets/img/spid-cover.jpg",
+      "alt": "Ricalcolo pensione inps a Bari e in provincia (Valenzano, Adelfia, Ceglie del Campo, Loseto, Carbonara, Triggiano) — documenti per la pratica di ricalcolo pensione inps"
     }
   ],
   "answerThePublic": {
@@ -196,5 +207,14 @@
       "ricalcolo pensione inps ogni quanto",
       "ricalcolo pensione inps quando"
     ]
-  }
+  },
+  "territoryCities": [
+    "Bari",
+    "Valenzano",
+    "Adelfia",
+    "Ceglie del Campo",
+    "Loseto",
+    "Carbonara",
+    "Triggiano"
+  ]
 }
