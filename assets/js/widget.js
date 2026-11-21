@@ -273,7 +273,11 @@
           var lbl = document.createElement('label');
           lbl.className = 'csi-area';
           lbl.innerHTML = '<input type="radio" name="csi-child" value="' + ch.key + '"> <span>' + ch.label + '</span>';
-          lbl.addEventListener('change', function () { state.selectedChild = ch.key; });
+          lbl.addEventListener('change', function () {
+            state.selectedChild = ch.key;
+            // Bug fix: ricalcola stato pulsante Avanti altrimenti resta disabled
+            updateStepNav();
+          });
           childrenWrap.appendChild(lbl);
         });
       }
@@ -294,6 +298,8 @@
               var idx = state.selectedAreas.indexOf(a);
               if (idx >= 0) state.selectedAreas.splice(idx, 1);
             }
+            // Bug fix: ricalcola stato pulsante Avanti altrimenti resta disabled
+            updateStepNav();
           });
           areasWrap.appendChild(lbl);
         });
@@ -549,9 +555,14 @@
 
   function updateStepNav() {
     var prev = $('#csi-btn-prev');
+    var prevMain = $('#csi-btn-prev-main');
     var next = $('#csi-btn-next');
     var submit = $('#csi-btn-submit');
-    if (prev) prev.style.display = state.step > 1 ? '' : 'none';
+    // Back button visibility:
+    //   - csi-btn-prev (dentro panel 4): visibile solo su step 4
+    //   - csi-btn-prev-main (nav comune): visibile su step 2 e 3
+    if (prev) prev.style.display = state.step === 4 ? '' : 'none';
+    if (prevMain) prevMain.style.display = (state.step > 1 && state.step < 4) ? '' : 'none';
     if (next) next.style.display = state.step < 4 ? '' : 'none';
     if (submit) submit.style.display = state.step === 4 ? '' : 'none';
     var check = canAdvanceStep(state.step);
@@ -754,6 +765,12 @@
         $('#csi-consent-banner').style.display = 'none';
       });
     }
+
+    // Consensi privacy + trattamento dati (step 3) — ricalcola button Avanti
+    var consentPrivacy = $('#csi-consent-privacy');
+    var consentData = $('#csi-consent-data');
+    if (consentPrivacy) consentPrivacy.addEventListener('change', updateStepNav);
+    if (consentData) consentData.addEventListener('change', updateStepNav);
 
     // OTP
     var sendBtn = $('#csi-otp-send');
