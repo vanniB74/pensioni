@@ -128,6 +128,45 @@ module.exports = async function handler(req, res) {
 
   if (req.method === 'OPTIONS') { res.status(204).end(); return; }
 
+  const url = new URL(req.url || '/', 'http://x');
+  const params = url.searchParams;
+  const endpoint = params.get('endpoint') || '';
+
+  // ENDPOINT TEMPORANEO DI DEBUG — accessibile senza firma per diagnose
+  if (endpoint === 'debug') {
+    const ts = String(req.headers['x-master-ts'] || '');
+    const u2 = new URL(req.url || '/', 'http://x');
+    const path2 = u2.pathname + (u2.search || '');
+    let body2;
+    if (req.body === undefined || req.body === null || req.body === '') body2 = '';
+    else if (typeof req.body === 'string') body2 = req.body;
+    else body2 = JSON.stringify(req.body);
+    const canonical2 = [ts, req.method, path2, body2].join('\n');
+    const secret_set = !!GATE_SECRET;
+    const expected2 = secret_set
+      ? crypto.createHmac('sha256', GATE_SECRET).update(canonical2).digest('hex')
+      : null;
+    res.status(200).json({
+      received: {
+        method: req.method,
+        url: req.url,
+        path: path2,
+        body: body2,
+        body_type: typeof req.body,
+        body_length: body2.length,
+        ts: ts,
+        sig_header: (req.headers['x-master-sig'] || '').slice(0, 30) + '...',
+      },
+      canonical_repr: canonical2.replace(/\n/g, '\\n'),
+      canonical_length: canonical2.length,
+      expected_sig: expected2 ? 'hmac-sha256:' + expected2 : null,
+      secret_set: secret_set,
+      secret_length: GATE_SECRET ? GATE_SECRET.length : 0,
+      secret_first8: GATE_SECRET ? GATE_SECRET.slice(0, 8) : null
+    });
+    return;
+  }
+
   if (!GATE_SECRET) {
     res.status(503).json({
       error: 'master_not_configured',
@@ -136,9 +175,6 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const url = new URL(req.url || '/', 'http://x');
-  const params = url.searchParams;
-  const endpoint = params.get('endpoint') || '';
   const auth = verifySignature(req);
 
   if (!auth.ok) {
@@ -248,37 +284,6 @@ module.exports = async function handler(req, res) {
       booked: Array.from(slotsBooked.entries()).map(function (e) {
         return { slot: e[0], ref: e[1].ref, bookedAt: e[1].bookedAt };
       })
-    });
-    return;
-  }
-
-  if (endpoint === 'debug') {
-    // ENDPOINT TEMPORANEO DI DEBUG — rimuovere in produzione
-    // Ritorna i componenti del canonical per diagnose firma
-    const ts = String(req.headers['x-master-ts'] || '');
-    const u2 = new URL(req.url || '/', 'http://x');
-    const path2 = u2.pathname + (u2.search || '');
-    let body2;
-    if (req.body === undefined || req.body === null || req.body === '') body2 = '';
-    else if (typeof req.body === 'string') body2 = req.body;
-    else body2 = JSON.stringify(req.body);
-    const canonical2 = [ts, req.method, path2, body2].join('\n');
-    const expected2 = crypto.createHmac('sha256', GATE_SECRET).update(canonical2).digest('hex');
-    res.status(200).json({
-      received: {
-        method: req.method,
-        url: req.url,
-        path: path2,
-        body: body2,
-        body_type: typeof req.body,
-        body_length: body2.length,
-        ts: ts,
-        sig_header: req.headers['x-master-sig'] || '',
-      },
-      canonical: canonical2,
-      expected_sig: 'hmac-sha256:' + expected2,
-      secret_set: !!GATE_SECRET,
-      secret_length: GATE_SECRET.length
     });
     return;
   }
