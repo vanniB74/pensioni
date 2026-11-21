@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C.S.I. · Prenota appuntamento</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0c2340">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/widget.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c2340'/%3E%3Ctext x='32' y='42' font-family='Inter,Arial' font-size='24' font-weight='700' fill='%23fff' text-anchor='middle'%3ECSI%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="csi-watermark" aria-hidden="true"></div>
+
+<div class="csi-wrap">
+
+  <header class="csi-head">
+    <div class="csi-mark" aria-hidden="true">CSI</div>
+    <div>
+      <h1 id="csi-widget-title">Prenota il tuo appuntamento</h1>
+      <p class="csi-sub" id="csi-service-sub">Caricamento servizio…</p>
+    </div>
+  </header>
+
+  <!-- Banner errori/successo/info -->
+  <div id="csi-banner" class="csi-banner is-error" role="alert" style="display:none"></div>
+
+  <!-- Cookie consent: apparirà come banner iniziale (inattivo qui di default) -->
+  <div id="csi-consent-banner" class="csi-banner is-info" role="status" style="display:none">
+    <strong class="csi-banner-t">Attribuzione</strong>
+    <span>Usiamo i parametri di campagna (utm_*, gclid, fbclid, referrer) solo dopo il tuo consenso per capire da dove arrivi. Li conserviamo in questa sessione.</span>
+    <div style="margin-top:10px">
+      <button type="button" class="csi-btn" id="csi-consent-btn">Acconsento</button>
+    </div>
+  </div>
+
+  <!-- Stepper -->
+  <div class="csi-steps" role="tablist" aria-label="Stati del wizard">
+    <div class="csi-step is-active" data-step-n="1" role="tab" tabindex="0">
+      <span class="csi-step-n">01</span>Giorno e servizio
+    </div>
+    <div class="csi-step" data-step-n="2" role="tab" tabindex="0">
+      <span class="csi-step-n">02</span>Anagrafica
+    </div>
+    <div class="csi-step" data-step-n="3" role="tab" tabindex="0">
+      <span class="csi-step-n">03</span>Mandato e privacy
+    </div>
+    <div class="csi-step" data-step-n="4" role="tab" tabindex="0">
+      <span class="csi-step-n">04</span>Conferma
+    </div>
+  </div>
+
+  <!-- ===== PASSO 1: Giorno e servizio ===== -->
+  <section class="csi-panel is-open" data-step="1" aria-labelledby="step1-h">
+    <h2 id="step1-h" tabindex="-1">Giorno e servizio</h2>
+    <p class="csi-panel-sub">Scegli una data nel calendario, poi un orario tra quelli disponibili.</p>
+
+    <div id="csi-children-wrap" style="margin-bottom:14px">
+      <span class="csi-label" style="display:block;font-size:12px;font-weight:600;color:var(--csi-navy);margin-bottom:6px">Sottoservizio di interesse</span>
+      <div id="csi-children" class="csi-areas"></div>
+    </div>
+
+    <div class="csi-cal">
+      <div class="csi-cal-head">
+        <button type="button" class="csi-cal-nav" id="csi-cal-prev" aria-label="Mese precedente">‹</button>
+        <div class="csi-cal-title" id="csi-cal-title">—</div>
+        <button type="button" class="csi-cal-nav" id="csi-cal-next" aria-label="Mese successivo">›</button>
+      </div>
+      <div class="csi-cal-grid" id="csi-cal-grid"></div>
+    </div>
+
+    <div id="csi-slots-wrap" aria-live="polite"></div>
+  </section>
+
+  <!-- ===== PASSO 2: Anagrafica ===== -->
+  <section class="csi-panel" data-step="2" aria-labelledby="step2-h">
+    <h2 id="step2-h" tabindex="-1">Anagrafica</h2>
+    <p class="csi-panel-sub">I tuoi dati anagrafici e di contatto. Tutti i campi sono obbligatori tranne dove indicato.</p>
+
+    <div class="csi-field">
+      <label class="csi-label" for="csi-nome">Nome e cognome</label>
+      <input class="csi-input" id="csi-nome" data-field="nome" type="text" autocomplete="name" aria-describedby="csi-nome-help" required>
+      <p class="csi-help" id="csi-nome-help">Inserisci nome e cognome completi.</p>
+    </div>
+
+    <div class="csi-field">
+      <label class="csi-label" for="csi-cf">Codice fiscale</label>
+      <input class="csi-input" id="csi-cf" data-field="cf" type="text" inputmode="text" maxlength="16" autocapitalize="characters" spellcheck="false" aria-describedby="csi-cf-help" required>
+      <p class="csi-help" id="csi-cf-help">16 caratteri, formato italiano.</p>
+    </div>
+
+    <div class="csi-field">
+      <label class="csi-label" for="csi-email">Email</label>
+      <input class="csi-input" id="csi-email" data-field="email" type="email" autocomplete="email" aria-describedby="csi-email-help" required>
+      <p class="csi-help" id="csi-email-help">Ti invieremo qui la conferma e i documenti.</p>
+    </div>
+
+    <div class="csi-field">
+      <label class="csi-label" for="csi-prefix">Prefisso internazionale</label>
+      <div class="csi-row">
+        <input class="csi-input" id="csi-prefix" data-field="prefix" type="text" value="+39" aria-describedby="csi-prefix-help" required>
+        <input class="csi-input" id="csi-tel" data-field="tel" type="tel" autocomplete="tel" inputmode="tel" aria-label="Telefono" aria-describedby="csi-tel-help" placeholder="Numero di telefono" required>
+      </div>
+      <p class="csi-help" id="csi-prefix-help">Formato: + e 1-4 cifre (es. +39, +44, +1).</p>
+      <p class="csi-help" id="csi-tel-help">6-12 cifre senza spazi.</p>
+    </div>
+
+    <div class="csi-field">
+      <label class="csi-label" for="csi-doc">Numero documento d'identità <span class="csi-opt">(facoltativo in questa fase)</span></label>
+      <input class="csi-input" id="csi-doc" data-field="doc" type="text" maxlength="20" autocapitalize="characters" spellcheck="false">
+    </div>
+
+    <div class="csi-field">
+      <label class="csi-label" for="csi-iban">IBAN <span class="csi-opt">(facoltativo)</span></label>
+      <input class="csi-input" id="csi-iban" data-field="iban" type="text" inputmode="text" autocapitalize="characters" spellcheck="false" placeholder="IT60X0542811101000000123456" aria-describedby="csi-iban-help">
+      <p class="csi-help" id="csi-iban-help">Lo usiamo solo per eventuali accreditamenti. Puoi anche compilarlo in sede.</p>
+      <label class="csi-check" for="csi-iban-later">
+        <input type="checkbox" id="csi-iban-later">
+        <span>
+          <span class="csi-check-t">Lo faccio dopo in sede</span>
+          <span class="csi-check-d">Salto questo campo per ora; lo fornirò di persona all'appuntamento.</span>
+        </span>
+      </label>
+    </div>
+  </section>
+
+  <!-- ===== PASSO 3: Mandato e privacy con OTP ===== -->
+  <section class="csi-panel" data-step="3" aria-labelledby="step3-h">
+    <h2 id="step3-h" tabindex="-1">Mandato e privacy</h2>
+    <p class="csi-panel-sub">Scegli le aree del mandato, accetta l'informativa e firma con il codice OTP via email.</p>
+
+    <span class="csi-label" style="display:block;font-size:12px;font-weight:600;color:var(--csi-navy);margin-bottom:6px">Aree del mandato omnibus (scegli quelle pertinenti)</span>
+    <div id="csi-areas" class="csi-areas"></div>
+
+    <div style="margin-top:18px">
+      <label class="csi-check" for="csi-consent-privacy">
+        <input type="checkbox" id="csi-consent-privacy">
+        <span>
+          <span class="csi-check-t">Informativa privacy</span>
+          <span class="csi-check-d">Ho preso visione dell'informativa ai sensi del GDPR (UE 2016/679).</span>
+        </span>
+      </label>
+      <label class="csi-check" for="csi-consent-data">
+        <input type="checkbox" id="csi-consent-data">
+        <span>
+          <span class="csi-check-t">Trattamento dati</span>
+          <span class="csi-check-d">Acconsento al trattamento dei dati per le finalità del mandato.</span>
+        </span>
+      </label>
+    </div>
+
+    <div style="margin-top:18px">
+      <span class="csi-label" style="display:block;font-size:12px;font-weight:600;color:var(--csi-navy);margin-bottom:6px">Firma con codice OTP (via email)</span>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+        <button type="button" class="csi-btn csi-btn-secondary" id="csi-otp-send">Invia codice OTP</button>
+        <div id="csi-otp-wrap" style="display:none;flex:1;min-width:240px">
+          <label class="csi-label" for="csi-otp-input">Codice a 6 cifre</label>
+          <input class="csi-input" id="csi-otp-input" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" aria-label="Codice OTP">
+        </div>
+        <button type="button" class="csi-btn csi-btn-secondary" id="csi-otp-verify" style="display:none">Verifica</button>
+      </div>
+    </div>
+
+    <div style="margin-top:18px">
+      <button type="button" class="csi-btn csi-btn-secondary" id="csi-open-forms">Scarica o invia i moduli precompilati</button>
+    </div>
+  </section>
+
+  <!-- ===== PASSO 4: Conferma ===== -->
+  <section class="csi-panel" data-step="4" aria-labelledby="step4-h">
+    <h2 id="step4-h" tabindex="-1">Conferma</h2>
+    <p class="csi-panel-sub">Verifica il riepilogo e conferma la prenotazione.</p>
+
+    <div class="csi-summary" id="csi-resume">
+      <dl>
+        <dt>Servizio</dt><dd id="csi-resume-service">—</dd>
+        <dt>Data</dt><dd id="csi-resume-date">—</dd>
+        <dt>Orario</dt><dd id="csi-resume-time">—</dd>
+        <dt>Intestatario</dt><dd id="csi-resume-name">—</dd>
+        <dt>Codice fiscale</dt><dd id="csi-resume-cf">—</dd>
+        <dt>Email</dt><dd id="csi-resume-email">—</dd>
+        <dt>Telefono</dt><dd id="csi-resume-tel">—</dd>
+        <dt>IBAN</dt><dd id="csi-resume-iban">—</dd>
+        <dt>Aree mandato</dt><dd id="csi-resume-areas">—</dd>
+        <dt>Firma</dt><dd id="csi-resume-firma">—</dd>
+      </dl>
+    </div>
+
+    <div class="csi-actions">
+      <button type="button" class="csi-btn" id="csi-btn-submit">Conferma prenotazione</button>
+      <button type="button" class="csi-btn csi-btn-secondary" id="csi-btn-prev">Indietro</button>
+    </div>
+  </section>
+
+  <!-- Nav comune -->
+  <div class="csi-actions" style="margin-top:14px">
+    <button type="button" class="csi-btn csi-btn-secondary" id="csi-btn-prev-main" style="display:none">Indietro</button>
+    <button type="button" class="csi-btn" id="csi-btn-next">Avanti</button>
+  </div>
+
+  <!-- Modal: moduli precompilati -->
+  <div class="csi-modal" id="csi-forms-modal" role="dialog" aria-modal="true" aria-labelledby="csi-forms-t">
+    <div class="csi-modal-card">
+      <h3 id="csi-forms-t">Moduli precompilati</h3>
+      <p>Scarica subito il mandato in PDF o invialo via email all'indirizzo che hai indicato.</p>
+      <div class="csi-modal-actions">
+        <button type="button" class="csi-btn csi-btn-secondary" id="csi-pdf-mandato">Scarica mandato PDF</button>
+        <button type="button" class="csi-btn csi-btn-secondary" id="csi-email-docs">Invia per email</button>
+        <button type="button" class="csi-btn csi-btn-secondary" data-close-forms="1">Chiudi</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="assets/js/widget.js" defer></script>
+<script>
+  // Mostriamo banner cookie solo se ci sono parametri di attribuzione
+  (function () {
+    var p = new URLSearchParams(location.search);
+    var hasAttr = ['utm_source','utm_medium','utm_campaign','gclid','fbclid'].some(function (k) { return p.get(k); });
+    if (hasAttr) {
+      var b = document.getElementById('csi-consent-banner');
+      if (b) b.style.display = '';
+    }
+    // Bind close buttons forms modal
+    document.addEventListener('click', function (e) {
+      if (e.target.getAttribute && e.target.getAttribute('data-close-forms') === '1') {
+        var m = document.getElementById('csi-forms-modal');
+        if (m) m.classList.remove('is-open');
+      }
+    });
+    // Sincronizza csi-btn-prev-main con csi-btn-prev
+    document.addEventListener('DOMContentLoaded', function () {
+      var p1 = document.getElementById('csi-btn-prev');
+      var p2 = document.getElementById('csi-btn-prev-main');
+      if (p1 && p2) {
+        p2.addEventListener('click', function () { p1.click(); });
+      }
+    });
+  })();
+</script>
+</body>
+</html>
