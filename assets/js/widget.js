@@ -373,6 +373,8 @@
           state.time = null;
           $all('.csi-cal-day').forEach(function (c) { c.classList.remove('is-selected'); });
           this.classList.add('is-selected');
+          // Aggiorna hint subito: ora sa che serve un orario
+          updateStepNav();
           loadSlots();
         });
       }
@@ -412,6 +414,9 @@
         if (r.status === 200 && r.body.slots) {
           state.slots = r.body.slots;
           renderSlots();
+          // Aggiorna hint + stato pulsante: ora che gli slot sono visibili
+          // l'utente può selezionarne uno (hint cambierà in "Seleziona un orario")
+          updateStepNav();
         } else {
           wrap.innerHTML = '<p class="csi-help is-error">Caricamento orari non riuscito. Riprova.</p>';
         }
