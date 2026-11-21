@@ -269,12 +269,20 @@
       var childrenWrap = $('#csi-children');
       if (childrenWrap && state.service.children && state.service.children.length) {
         childrenWrap.innerHTML = '';
-        state.service.children.forEach(function (ch) {
+        // Auto-seleziona il PRIMO sottoservizio di default (UX: l'utente non
+        // deve per forza scegliere se va bene il default — pulsante Avanti resta
+        // attivo appena sceglie data + slot)
+        state.selectedChild = state.service.children[0].key;
+        state.service.children.forEach(function (ch, idx) {
           var lbl = document.createElement('label');
           lbl.className = 'csi-area';
-          lbl.innerHTML = '<input type="radio" name="csi-child" value="' + ch.key + '"> <span>' + ch.label + '</span>';
+          var isFirst = idx === 0;
+          lbl.innerHTML = '<input type="radio" name="csi-child" value="' + ch.key + '"' + (isFirst ? ' checked' : '') + '> <span>' + ch.label + '</span>';
+          if (isFirst) lbl.classList.add('is-checked');
           lbl.addEventListener('change', function () {
             state.selectedChild = ch.key;
+            $all('#csi-children .csi-area').forEach(function (c) { c.classList.remove('is-checked'); });
+            lbl.classList.add('is-checked');
             // Bug fix: ricalcola stato pulsante Avanti altrimenti resta disabled
             updateStepNav();
           });
@@ -558,6 +566,7 @@
     var prevMain = $('#csi-btn-prev-main');
     var next = $('#csi-btn-next');
     var submit = $('#csi-btn-submit');
+    var hint = $('#csi-next-hint');
     // Back button visibility:
     //   - csi-btn-prev (dentro panel 4): visibile solo su step 4
     //   - csi-btn-prev-main (nav comune): visibile su step 2 e 3
@@ -568,6 +577,16 @@
     var check = canAdvanceStep(state.step);
     if (next) next.disabled = !check.ok;
     if (submit) submit.disabled = !check.ok || state.submitting;
+    // Hint dinamico: cosa manca per abilitare Avanti
+    if (hint) {
+      if (check.ok || state.step === 4) {
+        hint.textContent = '';
+        hint.style.display = 'none';
+      } else {
+        hint.textContent = 'Per continuare: ' + check.msg;
+        hint.style.display = '';
+      }
+    }
   }
 
   // ---------- Submit ----------
