@@ -84,10 +84,12 @@ module.exports = async function handler(req, res) {
   const sig = sign(ts, method, targetPath, bodyStr);
 
   const forwardHeaders = {
-    'Content-Type': 'application/json',
     'x-master-sig': sig,
     'x-master-ts': ts
   };
+  if (method !== 'GET' && method !== 'HEAD') {
+    forwardHeaders['Content-Type'] = 'application/json';
+  }
   // Idempotency-Key passa dal widget → master
   const idemKey = req.headers['x-idempotency-key'];
   if (idemKey) forwardHeaders['x-idempotency-key'] = String(idemKey);

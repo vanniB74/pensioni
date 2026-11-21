@@ -95,6 +95,7 @@ function verifySignature(req) {
   const path = u.pathname + (u.search || '');
   let body;
   if (req.body === undefined || req.body === null || req.body === '') body = '';
+  else if (typeof req.body === 'object' && Object.keys(req.body).length === 0) body = '';
   else if (typeof req.body === 'string') body = req.body;
   else body = JSON.stringify(req.body);
   const canonical = [ts, method, path, body].join('\n');
