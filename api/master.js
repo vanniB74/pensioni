@@ -18,12 +18,12 @@
  * Rifiuta (>1000s di skew o firma non匹配) con 401.
  *
  * Variabili env:
- *   GATE_SECRET  — chiave HMAC condivisa col gate (default dev)
+ *   CSI_HMAC_SECRET — chiave HMAC condivisa col gate (REQUIRED in produzione)
  */
 
 const crypto = require('crypto');
 
-const GATE_SECRET = process.env.GATE_SECRET || 'dev-shared-secret-do-not-use-in-prod';
+const GATE_SECRET = process.env.CSI_HMAC_SECRET || process.env.GATE_SECRET || '';
 const TIME_SKEW_SECONDS = 120;
 
 // Stato in-memory. Vercel serverless: ogni istanza ha il suo stato.
@@ -127,6 +127,14 @@ module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-master-sig, x-master-ts');
 
   if (req.method === 'OPTIONS') { res.status(204).end(); return; }
+
+  if (!GATE_SECRET) {
+    res.status(503).json({
+      error: 'master_not_configured',
+      message: 'CSI_HMAC_SECRET env var non impostata. Il Master non può verificare le firme.'
+    });
+    return;
+  }
 
   const url = new URL(req.url || '/', 'http://x');
   const params = url.searchParams;

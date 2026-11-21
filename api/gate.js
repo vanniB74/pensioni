@@ -18,13 +18,13 @@
  *   x-master-ts   = unix seconds
  *
  * Env:
- *   GATE_SECRET   — chiave HMAC (default dev-shared-secret)
- *   MASTER_URL    — base URL del Master (default /api/master stesso progetto)
+ *   CSI_HMAC_SECRET — chiave HMAC condivisa col Master (REQUIRED in produzione)
+ *   MASTER_URL      — base URL del Master (default /api/master stesso progetto)
  */
 
 const crypto = require('crypto');
 
-const GATE_SECRET = process.env.GATE_SECRET || 'dev-shared-secret-do-not-use-in-prod';
+const GATE_SECRET = process.env.CSI_HMAC_SECRET || process.env.GATE_SECRET || '';
 const MASTER_URL = process.env.MASTER_URL || ''; // vuoto = /api/master nello stesso progetto
 
 function sign(ts, method, path, body) {
@@ -40,6 +40,14 @@ module.exports = async function handler(req, res) {
 
   if (req.method === 'OPTIONS') { res.status(204).end(); return; }
   if (req.method !== 'POST') { res.status(405).json({ error: 'method_not_allowed' }); return; }
+
+  if (!GATE_SECRET) {
+    res.status(503).json({
+      error: 'gate_not_configured',
+      message: 'CSI_HMAC_SECRET env var non impostata. Il gate non può firmare.'
+    });
+    return;
+  }
 
   let payload = req.body;
   if (typeof payload === 'string') {
