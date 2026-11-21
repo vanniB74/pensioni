@@ -90,13 +90,18 @@ function verifySignature(req) {
     return { ok: false, code: 'timestamp_skew' };
   }
   const method = (req.method || 'GET').toUpperCase();
-  const path = new URL(req.url || '/', 'http://x').pathname;
-  const body = typeof req.body === 'string' ? req.body : JSON.stringify(req.body || '');
+  // Canonical include path+query (must match gate signing)
+  const u = new URL(req.url || '/', 'http://x');
+  const path = u.pathname + (u.search || '');
+  let body;
+  if (req.body === undefined || req.body === null || req.body === '') body = '';
+  else if (typeof req.body === 'string') body = req.body;
+  else body = JSON.stringify(req.body);
   const canonical = [ts, method, path, body].join('\n');
   const expected = crypto.createHmac('sha256', GATE_SECRET).update(canonical).digest('hex');
   // Constant-time compare
   const a = Buffer.from(expected, 'hex');
-  const b = Buffer.from(sig.replace(/^hmac-sha256=/, ''), 'hex');
+  const b = Buffer.from(sig.replace(/^hmac-sha256[:=]/, ''), 'hex');
   if (a.length !== b.length) return { ok: false, code: 'sig_length' };
   let diff = 0;
   for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
